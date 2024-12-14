@@ -27,23 +27,16 @@ export default function VoiceRecorder() {
           const audioUrl = URL.createObjectURL(audioBlob);
           setAudioUrl(audioUrl);
 
-          // Convert to Base64 for localStorage
-          const reader = new FileReader();
-          reader.readAsDataURL(audioBlob);
-          reader.onloadend = () => {
-            localStorage.setItem("voiceRecording", reader.result); // Save as Base64 string
-          };
-
-          audioChunksRef.current = []; // Clear chunks after saving
+          audioChunksRef.current = [];
         };
       })
-      .catch((err) => setError("Microphone access denied. Please enable permissions."));
+      .catch((err) => setError("Microphone Access Denied."));
   }, []);
 
   const startRecording = () => {
     if (!mediaRecorderRef.current) return;
     setIsRecording(true);
-    audioChunksRef.current = []; // Reset chunks for a new recording
+    audioChunksRef.current = [];
     mediaRecorderRef.current.start();
   };
 
@@ -56,23 +49,22 @@ export default function VoiceRecorder() {
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="text-2xl mb-3">Start Recording</p>
-      {error && <p className="text-2xl text-red-400">{error}</p>}
+      {error && <p className="text-2xl text-red-200 mb-2">{error}</p>}
 
       {isRecording ? (
         <StopIcon
           onClick={stopRecording}
-          className="text-3xl text-red-400 cursor-pointer"
+          className="text-4xl text-red-400 cursor-pointer"
         />
       ) : (
         <RecordIcon
           onClick={startRecording}
-          className="text-3xl text-gray-700 cursor-pointer"
+          className="text-4xl text-gray-700 cursor-pointer"
         />
       )}
 
       {audioUrl && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Playback:</h3>
+        <div className="mt-4">
           <audio controls src={audioUrl} />
         </div>
       )}
