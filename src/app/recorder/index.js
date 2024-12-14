@@ -48,7 +48,7 @@ export default function VoiceRecorder() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <p className="text-2xl mb-3">Start Recording</p>
+      <p className="text-2xl mb-3">Voice Recorder</p>
       {error && <p className="text-2xl text-red-200 mb-2">{error}</p>}
 
       {isRecording ? (
